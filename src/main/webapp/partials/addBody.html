@@ -52,33 +52,12 @@
                     </span>
                 </td>
 
-                <!--<td>-->
-                    <!--&lt;!&ndash; editable status (select-local) &ndash;&gt;-->
-                    <!--<span editable-select="entry.status" e-form="tableform" e-ng-options="s.value as s.text for s in statuses">-->
-                    <!--{{ showStatus(user) }}-->
-                    <!--</span>-->
-                <!--</td>-->
-                <!--<td>-->
-                    <!--&lt;!&ndash; editable group (select-remote) &ndash;&gt;-->
-                    <!--<span editable-select="entry.group" e-form="tableform" onshow="loadGroups()" e-ng-options="g.id as g.text for g in groups">-->
-                    <!--{{ showGroup(user) }}-->
-                    <!--</span>-->
-                <!--</td>-->
-                <!--<td><button type="button" ng-show="tableform.$visible" ng-click="deleteUser(user.id)" class="btn btn-danger pull-right">Del</button></td>-->
             </tr>
         </table>
 
-        <!-- buttons -->
-        <!--<div class="btn-edit">-->
-            <!--<button type="button" class="btn btn-default" ng-show="!tableform.$visible" ng-click="tableform.$show()">-->
-                <!--edit-->
-            <!--</button>-->
-        <!--</div>-->
-        <!--<div class="btn-form" ng-show="tableform.$visible">-->
+
         <div class="btn-form">
-            <!--<button type="button" ng-disabled="tableform.$waiting" ng-click="addUser()" class="btn btn-default pull-right">add row</button>-->
             <button type="submit" ng-disabled="tableform.$waiting" class="btn btn-primary">save</button>
-            <!--<button type="button" ng-disabled="tableform.$waiting" ng-click="tableform.$cancel()" class="btn btn-default">cancel</button>-->
         </div>
 
     </form>
