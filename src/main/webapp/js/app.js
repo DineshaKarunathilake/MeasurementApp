@@ -394,8 +394,3 @@ services.factory('BatchListService', function($resource) {
 	return $resource('rest/new/:id', {id: '@id'});
 });
 
-services.factory('NewMeasurementService', function($resource) {
-
-	return $resource('rest/new/:id', {id: '@id'});
-});
-
