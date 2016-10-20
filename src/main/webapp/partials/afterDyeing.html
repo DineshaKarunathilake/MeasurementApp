@@ -1,0 +1,53 @@
+<div class="page-header">
+    <h3>Add New After Dyeing Measurement</h3>
+</div>
+
+
+<!--<label for="size" class="col-sm-3 control-label">Size:</label>-->
+<!--<div class="col-sm-9">-->
+<!--<input id="size" ng-model="size" type="text" class="form-control" />-->
+<!--</div>-->
+<label class="control-label col-sm-2" for="customer">Customer</label>
+<div class="col-sm-10">
+    <input ng-model="newMeasurementEntry.customer" id="customer" class="form-control"/> {{newMeasurementEntry.customer}}
+</div>
+<label class="control-label col-sm-2" for="customer">Style</label>
+<div class="col-sm-10">
+    <input ng-model="newMeasurementEntry.style" id="style" class="form-control"/>
+</div>
+<label class="control-label col-sm-2" for="customer">Batch No:</label>
+<div class="col-sm-10">
+    <input ng-model="newMeasurementEntry.batchno" id="batchno" class="form-control"/>
+</div>
+
+<table class="table table-bordered table-hover table-condensed" width="10">
+
+    <tr style="font-weight: bold">
+        <td style="width:10%">Size</td>
+        <td style="width:10%">Body</td>
+        <td style="width:10%">Sleeve</td>
+    </tr>
+
+    <tr ng-repeat="size in sizes">
+        <td>
+            <!-- editable Garment no: (float with validation) -->
+            <span text="size.s" ng-model="size.s" e-form="tableform">
+                {{ size.s }}
+            </span>
+        </td>
+        <td>
+            <span>
+            <a href="#!/addBody" class="btn btn-default" ng-show="hasRole('ROLE_ADMIN')"
+               title={{newMeasurementEntry.customer}}><span class="fa fa-plus"></span></a>
+            </span>
+        </td>
+        <td>
+            <span>
+            <a href="#!/addSleeve" class="btn btn-default" ng-show="hasRole('ROLE_ADMIN')" title="uhj"><span
+                    class="fa fa-plus"></span></a>
+            </span>
+        </td>
+    </tr>
+</table>
+
+</form>

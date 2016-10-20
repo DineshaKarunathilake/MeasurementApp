@@ -1,0 +1,19 @@
+<div class="page-header">
+    <h3>Batch List</h3>
+</div>
+
+
+<table class="table table-hover">
+    <thead>
+    <tr>
+        <th style="width:20%">Style</th>
+        <th style="width:80%">Batch</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="batch in batches | orderBy:'styleName'" ng-click="setSelected();">
+        <td>{{ batch.styleName }}</td>
+        <td>{{ batch.batchNo }}</td>
+    </tr>
+    </tbody>
+</table>
