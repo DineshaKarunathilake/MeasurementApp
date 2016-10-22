@@ -11,22 +11,8 @@ angular.module('exampleApp', ['ngRoute', 'ngCookies', 'exampleApp.services','xed
             				controller: SelectStageController
             			});
 
-            $routeProvider.when('/beforePresetting', {
-                        	templateUrl: 'partials/beforePresetting.html',
-                        	controller: BeforePresettingController
-                        });
-
-            $routeProvider.when('/afterPresetting', {
-                        	templateUrl: 'partials/afterPresetting.html',
-                        	controller: AfterPresettingController
-                        });
-
-              $routeProvider.when('/afterDyeing', {
-                            templateUrl: 'partials/afterDyeing.html',
-                            controller: AfterDyeingController
-                        });
-			$routeProvider.when('/newmeasurement', {
-                            templateUrl: 'partials/newmeasurement.html',
+			$routeProvider.when('/addNewMeasurement/:stage', {
+                            templateUrl: 'partials/addNewMeasurement.html',
                             controller: NewMeasurementController
                         });
 
@@ -48,6 +34,12 @@ angular.module('exampleApp', ['ngRoute', 'ngCookies', 'exampleApp.services','xed
                          {
                              templateUrl: 'partials/batchList.html',
                              controller: BatchListCtrl
+
+                         });
+            $routeProvider.when('/batchList/:id',
+                         {
+                             templateUrl: 'partials/viewBatch.html',
+                             controller: ViewBatchCtrl
 
                          });
 
@@ -97,7 +89,8 @@ angular.module('exampleApp', ['ngRoute', 'ngCookies', 'exampleApp.services','xed
 		   
 		} ]
 		
-	).run(function($rootScope, $location, $cookieStore,	editableOptions) {
+	)
+	.run(function($rootScope, $location, $cookieStore,	editableOptions) {
 
 	     editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
 		
@@ -109,7 +102,7 @@ angular.module('exampleApp', ['ngRoute', 'ngCookies', 'exampleApp.services','xed
 
 		 /* Try getting valid user from cookie or go to login page */
 		var originalPath = $location.path();
-		$location.path("/firstpage");
+
 
 		$rootScope.initialized = true;
 	});
@@ -126,6 +119,53 @@ angular.module('exampleApp', ['ngRoute', 'ngCookies', 'exampleApp.services','xed
 //		});
 //	};
 //}
+
+function NewMeasurementController($scope,$routeParams, $location) {
+    $scope.disable=true;
+    $scope.newMeasurementEntry={}
+    $scope.newMeasurementEntry.customer="Please enter a Batch Number";
+    $scope.newMeasurementEntry.style="Please enter a Batch Number";
+
+    $scope.checkBatchNo= function(){
+    $scope.newMeasurementEntry.customer="Invalid Batch Number";
+    $scope.newMeasurementEntry.style="Invalid Batch Number";
+
+         if($scope.newMeasurementEntry.batchNo=="1234"){
+             $scope.newMeasurementEntry.customer="YOUR CCutomer";
+             $scope.newMeasurementEntry.style="Your style";
+             $scope.batchNo=$scope.newMeasurementEntry.batchNo;
+         }
+
+    }
+     switch ($routeParams.stage){
+        case 'beforePresetting':
+            $scope.stage=0;
+            $scope.stageName='Before Presetting';
+            break;
+        case 'afterPresetting':
+           $scope.stage=2;
+           $scope.stageName='After Presetting';
+           break;
+        case 'afterDyeing':
+           $scope.stage=3;
+           $scope.stageName='After Dyeing';
+           break;
+        default:
+           $location.path('/selectStage');
+
+     }
+	 $scope.sizes = [
+        {id: 1, s: 'XS'},
+        {id: 2, s: 'S'},
+        {id: 3, s: 'M'},
+        {id: 4, s: 'L'},
+        {id: 5, s: 'XL'}
+      ];
+
+        $scope.save = function() {
+		console.log("Saving : " + $scope.newMeasurementEntry)
+	};
+};
 
 
 function AfterDyeingController($scope,$routeParams, $location, NewMeasurementService) {
@@ -149,26 +189,6 @@ function AfterDyeingController($scope,$routeParams, $location, NewMeasurementSer
 };
 
 function AfterPresettingController($scope,$routeParams, $location, NewMeasurementService) {
-
-	$scope.newMeasurementEntry = new NewMeasurementService();
-	$scope.newMeasurementEntry = NewMeasurementService.get({id: $routeParams.id});
-
-	 $scope.sizes = [
-        {id: 1, s: 'XS'},
-        {id: 2, s: 'S'},
-        {id: 3, s: 'M'},
-        {id: 4, s: 'L'},
-        {id: 5, s: 'XL'}
-      ];
-
-	$scope.save = function() {
-		$scope.newMeasurementEntry.$save(function() {
-			$location.path('/');
-		});
-	};
-};
-
-function NewMeasurementController($scope,$routeParams, $location, NewMeasurementService) {
 
 	$scope.newMeasurementEntry = new NewMeasurementService();
 	$scope.newMeasurementEntry = NewMeasurementService.get({id: $routeParams.id});
@@ -238,21 +258,14 @@ function FirstPageController($scope, $routeParams, $location) {
 
 
 function SelectStageController($scope, $rootScope) {
-
-$rootScope.stage = null;
-$rootScope.status = null;
-if($rootScope.status == beforePresettingStage)    {
-    $rootScope.stage = beforePresettingStage;
-    }
-if($rootScope.status == afterPresettingStage)    {
-    $rootScope.stage = beforePresettingStage;
-    }
-if($rootScope.status == afterDyeingStage)    {
-    $rootScope.stage = beforePresettingStage;
-    }
-console.log($rootScope.stage);
-
 }
+
+
+function ViewBatchCtrl($scope,$routeParams, $location) {
+
+params:{id:$routeParams.id}
+
+};
 
 
 function CreateController($scope, $location, BlogPostService) {
@@ -394,3 +407,7 @@ services.factory('BatchListService', function($resource) {
 	return $resource('rest/new/:id', {id: '@id'});
 });
 
+services.factory('NewMeasurementService', function($resource) {
+
+	return $resource('redsst/new', {id: '1'});
+});

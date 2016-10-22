@@ -13,7 +13,7 @@
     <tbody>
     <tr ng-repeat="batch in batches | orderBy:'styleName'" ng-click="setSelected();">
         <td>{{ batch.styleName }}</td>
-        <td>{{ batch.batchNo }}</td>
+        <td><a href="batchList/{{ batch.id }}"></a>{{ batch.batchNo }}</td>
     </tr>
     </tbody>
 </table>
