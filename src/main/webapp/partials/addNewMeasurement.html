@@ -15,8 +15,9 @@
     <input ng-disabled="disable" ng-model="newMeasurementEntry.style" id="style" class="form-control"/>
 </div>
 
-
-<table class="table table-bordered table-hover table-condensed" width="10">
+<div class="col-md-4" style="text-align: center">
+    <div align="center">
+        <table class="table table-bordered table-hover table-condensed" width="10">
 
     <tr style="font-weight: bold">
         <td style="width:10%">Size</td>
@@ -33,15 +34,19 @@
         </td>
         <td>
             <span>
-            <a ng-disabled="!batchNo" href="#!/addBody/{{batchNo}}/{{stage}}/{{size.id}}" class="btn btn-default" title="Add Body"><span class="fa fa-plus"></span></a>
+                <!--/addNewMeasurement/beforePresetting-->
+            <a ng-disabled="!batchNo" href="#!/addBody/{{stage}}/{{size.id}}" class="btn btn-default"
+               title="Add Body"><span class="fa fa-plus"></span></a>
             </span>
         </td>
         <td>
             <span>
-            <a ng-disabled="!batchNo" href="#!/addSleeve" class="btn btn-default" title="Add Sleeve"><span class="fa fa-plus"></span></a>
+            <a ng-disabled="!batchNo" href="#!/addSleeve/{{stage}}/{{size.id}}" class="btn btn-default"
+               title="Add Sleeve"><span class="fa fa-plus"></span></a>
             </span>
         </td>
     </tr>
 </table>
-
+    </div>
+</div>
 </form>

@@ -1,5 +1,5 @@
 <div class="page-header">
-    <h3>Add Body Measurements</h3>
+    <h3>Add Body Measurements for {{size}} of batch {{batchNo}}</h3>
 </div>
 <div>
     <form editable-form name="tableform" onaftersave="saveTable()" oncancel="cancel()">
@@ -57,7 +57,8 @@
 
 
         <div class="btn-form">
-            <button type="submit" ng-disabled="tableform.$waiting" class="btn btn-primary">save</button>
+            <button type="submit" ng-disabled="tableform.$waiting" class="btn btn-primary" ng-click="saveTable()">save
+            </button>
         </div>
 
     </form>
