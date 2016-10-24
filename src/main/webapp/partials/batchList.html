@@ -10,7 +10,7 @@
     </tr>
     <!--ng-click="setSelected();"-->
     <tr ng-repeat="batch in batches | orderBy:'styleName'">
-        <td>{{ batch.styleName }}</td>
+        <td>{{ batch.styleName}}</td>
         <td><a href="#!/viewBatch/{{batch.id}}" class="btn btn-default">{{batch.batchNo}}</a></td>
     </tr>
 </table>

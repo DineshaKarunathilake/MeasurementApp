@@ -24,14 +24,6 @@ angular.module('exampleApp', ['ngRoute', 'ngCookies', 'exampleApp.services','xed
                             controller: AddSleeveController
                         });
 
-
-//            $routeProvider.when('/addSleeve',
-//                        {
-//                             templateUrl: 'partials/addSleeve.html',
-//                             controller: AddSleeveCtrl
-//
-//                        });
-
             $routeProvider.when('/batchList',
                          {
                              templateUrl: 'partials/batchList.html',
@@ -109,19 +101,6 @@ angular.module('exampleApp', ['ngRoute', 'ngCookies', 'exampleApp.services','xed
 		$rootScope.initialized = true;
 	});
 
-
-//
-//function IndexController($scope, BlogPostService) {
-//
-//	$scope.blogPosts = BlogPostService.query();
-//
-//	$scope.deletePost = function (blogPost) {
-//		blogPost.$remove(function () {
-//			$scope.blogPosts = BlogPostService.query();
-//		});
-//	};
-//}
-
 function NewMeasurementController($scope,$routeParams, $location) {
     $scope.disable=true;
     $scope.newMeasurementEntry={}
@@ -180,8 +159,6 @@ function SelectStageController($scope, $rootScope) {
 
 function ViewBatchCtrl($scope,$routeParams, $location) {
 
-//       $scope.batch.id=$routeParams.id;
-
     console.log($routeParams.batch)
   switch ($routeParams.batch){
         case '1':
@@ -216,10 +193,7 @@ function ViewBatchCtrl($scope,$routeParams, $location) {
 
      }
 
-     console.log("Batch Number"+$scope.batchNumber)
-
-//  for (i=)
-
+     console.log("Batch Number"+$scope.batchNumber+ "Style" + $scope.styleName)
 
 $scope.id = $routeParams.id;
 
@@ -240,8 +214,7 @@ function CreateController($scope, $location, BlogPostService) {
 
 
 function AddBodyController($scope,$routeParams, $location){
-//     $scope.newMeasurementEntry={}
-//     $scope.batchNo=$scope.newMeasurementEntry.batchNo;
+
 
      $scope.entries = [
         {id: 1, gmt: 'Garment1',chestWidth: 0, hemWidth:0,cbLength:0,cfLength:0},
@@ -278,10 +251,9 @@ function AddBodyController($scope,$routeParams, $location){
 
   // save edits
       $scope.saveTable = function() {
-//        var results = [];
-        console.log($scope.entries);
+      console.log($scope.entries);
 
-        };
+       };
 
        }
 
@@ -323,16 +295,12 @@ function AddSleeveController($scope,$routeParams, $location){
           }
 
   // save edits
-      $scope.saveTable = function() {
-//        var results = [];
+     $scope.saveTable = function() {
         console.log($scope.entries);
 
         };
+
 }
-
-
-
-
 function BatchListCtrl($scope, $routeParams, $location){
      $scope.batches = [
         {id: 1, batchNo: '12341',styleName: 'ab111',stage: '1'},
