@@ -41,7 +41,23 @@ public class GarmentEntryService {
         return garmentEntrydao.getGarmentEntry(bid,sizeid,stageid);
 
     }
+    
+    @GET
+    @Path("/getGarments")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Object getGarments(@QueryParam("batchId") final Integer batchId,@QueryParam("sizeid") final Integer sizeid){
+        return garmentEntrydao.getGarments(batchId,sizeid);
 
- 
+    }
+
+
+  @POST
+    @Path("/updateGarmentEntry")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateGarmentEntry(@QueryParam("id") final Double id,@QueryParam("bid") final Double bid,@QueryParam("sid") final Double sid,@QueryParam("stageid") final Double stageid,@QueryParam("cblength") final Double cblength,@QueryParam("cflength") final Double cflength,@QueryParam("chestwidth") final Double chestwidth,@QueryParam("hemwidth") final Double hemwidth){
+        garmentEntrydao.updateGarmentEntry(id,bid,sid,stageid,cblength,cflength,chestwidth,hemwidth);
+        return Response.ok().build();
+
+    }
 
 }

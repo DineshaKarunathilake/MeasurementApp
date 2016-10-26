@@ -6,6 +6,7 @@ import org.eclipse.persistence.config.ResultType;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
 /**
@@ -14,6 +15,35 @@ import javax.persistence.Query;
 public class BatchJpaControllerExt extends BatchJpaController {
     public BatchJpaControllerExt(EntityManagerFactory emf) {
         super(emf);
+    }
+    
+    
+    public void createBatch(Integer batchNo,String customer,String styleName) {
+
+        EntityManager em = getEntityManager();
+        try {
+            
+            EntityTransaction et=em.getTransaction();
+            et.begin();
+
+            String sqlString ="INSERT INTO style (name,customer) values (?styleName,?customer)";
+            Query query = em.createNativeQuery(sqlString);
+            query.setParameter("batchNo", batchNo);
+            query.setParameter("customer", customer);
+            query.setParameter("styleName", styleName);
+            query.executeUpdate();
+            
+            String sqlString2 ="INSERT INTO batch (style_id,batch_number,current_stage_id,total_count) values ((select id from style where name=?styleName and customer=?customer),?batchNo,1,10)";
+            Query query2 = em.createNativeQuery(sqlString2);
+            query2.setParameter("batchNo", batchNo);
+            query2.setParameter("customer", customer);
+            query2.setParameter("styleName", styleName);
+            query2.executeUpdate();
+            et.commit();
+            
+        } finally {
+            em.close();
+        }
     }
 
     public Object getBatchList() {
@@ -97,6 +127,22 @@ public class BatchJpaControllerExt extends BatchJpaController {
                     + "FROM batch b "
                     + "inner join style s on b.style_id = s.id "
                     + "where b.batch_number=?id";
+            Query query = em.createNativeQuery(sqlString);
+            query.setParameter("id", id);
+            query.setHint(QueryHints.RESULT_TYPE, ResultType.Map);
+            return query.getSingleResult();
+        } finally {
+            em.close();
+        }
+    }
+     
+     
+     public Object getBatchData(int id) {
+
+        EntityManager em = getEntityManager();
+        try {
+
+            String sqlString ="select b.batch_number as batchNo, s.name as styleName, s.customer as customer from batch b inner join style s on b.style_id = s.id where b.id=?id";
             Query query = em.createNativeQuery(sqlString);
             query.setParameter("id", id);
             query.setHint(QueryHints.RESULT_TYPE, ResultType.Map);

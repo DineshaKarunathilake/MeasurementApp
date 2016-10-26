@@ -62,5 +62,54 @@ public class GarmentEntryJpaControllerExt extends GarmentEntryJpaController {
         }
     }
     
+    public Object getGarments(int batchId,int sizeid) {
+
+        EntityManager em = getEntityManager();
+        try {
+
+            String sqlString ="SELECT * FROM garment_entry where "
+                    + "batch_id = ?batchId "
+                    + "and size_id = ?sizeid "
+                    + "order by stage_id";
+            Query query = em.createNativeQuery(sqlString);
+            query.setParameter("batchId", batchId);
+            query.setParameter("sizeid", sizeid);
+            query.setHint(QueryHints.RESULT_TYPE, ResultType.Map);
+            return query.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+    
+    
+    public void updateGarmentEntry(double id,double bid,double sid,double stageid,double cblength,double cflength,double chestwidth,double hemwidth) {
+
+        EntityManager em = getEntityManager();
+        try {
+            
+            EntityTransaction et=em.getTransaction();
+            et.begin();
+
+            String sqlString ="update garment_entry set chest_width=?chestwidth,hem_width=?hemwidth,cb_length=?cblength,cf_length=?cflength where id=?id ";
+            Query query = em.createNativeQuery(sqlString);
+            query.setParameter("id", id);
+            query.setParameter("bid", bid);
+            query.setParameter("sid", sid);
+            query.setParameter("stageid", stageid);
+            query.setParameter("cblength", cblength);
+            query.setParameter("cflength", cflength);
+            query.setParameter("chestwidth", chestwidth);
+            query.setParameter("hemwidth", hemwidth);
+            query.executeUpdate();
+            et.commit();
+            
+        } finally {
+            em.close();
+        }
+    }
+    
+    
+    
+    
     
 }

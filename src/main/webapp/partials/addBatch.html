@@ -1,0 +1,19 @@
+<br>
+<br>
+
+<label class="control-label col-sm-2" for="customer">Batch No:</label>
+<div class="col-md-10">
+    <input  ng-model="batchEntry.batchNo" id="batchno" class="form-control"/>
+</div>
+<br>
+<label class="control-label col-sm-2" for="customer">Customer</label>
+<div class="col-md-10">
+    <input ng-model="batchEntry.customer" id="customer" class="form-control"/>
+</div>
+<br>
+<label class="control-label col-sm-2" for="customer">Style</label>
+<div class="col-md-10">
+    <input  ng-model="batchEntry.style" id="style" class="form-control"/>
+</div>
+
+<a style="margin-left: 200px;margin-top: 10px"  class="btn btn-success" title="Add Batch" ng-click="saveBatch()">save</a>
