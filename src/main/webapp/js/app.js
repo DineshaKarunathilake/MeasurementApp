@@ -225,34 +225,47 @@ function ViewBatchCtrl($scope,$routeParams, $location) {
         case '1':
             $scope.batchNumber='12341';
             $scope.styleName ='ab112';
-            $scope.stage='0';
+            $scope.stage='Before Presetting';
             break;
         case '2':
            $scope.batchNumber='12342';
            $scope.styleName ='ab111';
-           $scope.stage='2';
+           $scope.stage='Before Presetting';
 
            break;
         case '3':
            $scope.batchNumber='12343';
            $scope.styleName ='ab112';
-           $scope.stage='1';
+           $scope.stage='Before Presetting';
            break;
         case '4':
            $scope.batchNumber='12344';
            $scope.styleName = 'ab111';
-           $scope.stage='0';
+           $scope.stage='Before Presetting';
            break;
         case '5':
            $scope.batchNumber='12345';
            $scope.styleName ='ab112';
-           $scope.stage='1';
+           $scope.stage='After Presetting';
            break;
 
         default:
            $location.path('/batchList');
 
      }
+
+     $scope.measurements = [
+
+
+        {id: 1, measurementName: 'Chest Width',s1g1: 1, s1g2:2, s1g3:3, s1g4:0, s1g5:0,s2g1: 0, s2g2:0, s2g3:0, s2g4:0, s2g5:0,s3g1: 0, s3g2:0, s3g3:0, s3g4:0, s3g5:0},
+        {id: 2, measurementName: 'Hem Width',s1g1: 0, s1g2:0, s1g3:0, s1g4:0, s1g5:0,s2g1: 0, s2g2:0, s2g3:0, s2g4:0, s2g5:0,s3g1: 0, s3g2:0, s3g3:0, s3g4:0, s3g5:0},
+        {id: 3, measurementName: 'CB Length',s1g1: 0, s1g2:0, s1g3:0, s1g4:0, s1g5:0,s2g1: 0, s2g2:0, s2g3:0, s2g4:0, s2g5:0,s3g1: 0, s3g2:0, s3g3:0, s3g4:0, s3g5:0},
+        {id: 4, measurementName: 'CF Length',s1g1: 0, s1g2:0, s1g3:0, s1g4:0, s1g5:0,s2g1: 0, s2g2:0, s2g3:0, s2g4:0, s2g5:0,s3g1: 0, s3g2:0, s3g3:0, s3g4:0, s3g5:0},
+        {id: 5, measurementName: 'Sleeve Opening',s1g1: 0, s1g2:0, s1g3:0, s1g4:0, s1g5:0,s2g1: 0, s2g2:0, s2g3:0, s2g4:0, s2g5:0,s3g1: 0, s3g2:0, s3g3:0, s3g4:0, s3g5:0},
+        {id: 6, measurementName: 'Sleeve Length',s1g1: 0, s1g2:0, s1g3:0, s1g4:0, s1g5:0,s2g1: 0, s2g2:0, s2g3:0, s2g4:0, s2g5:0,s3g1: 0, s3g2:0, s3g3:0, s3g4:0, s3g5:0},
+        {id: 7, measurementName: 'Sleeve Width',s1g1: 0, s1g2:0, s1g3:0, s1g4:0, s1g5:0,s2g1: 0, s2g2:0, s2g3:0, s2g4:0, s2g5:0,s3g1: 0, s3g2:0, s3g3:0, s3g4:0, s3g5:0}
+      ];
+
 
      console.log("Batch Number"+$scope.batchNumber+ "Style" + $scope.styleName)
 
@@ -387,8 +400,8 @@ function AddBodyController($scope,$routeParams, $location,$http,appConfig){
        };
        
        $scope.init();
+       }
 
-   }
 
 function AddSleeveController($scope,$routeParams, $location){
 
