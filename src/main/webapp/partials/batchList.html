@@ -6,11 +6,13 @@
 <table class="table table-bordered table-hover table-condensed">
     <tr style="font-weight: bold">
         <th style="width:20%">Style</th>
-        <th style="width:80%">Batch</th>
+        <th style="width:40%">Batch</th>
+        <th style="width:40%">Customer</th>
     </tr>
     <!--ng-click="setSelected();"-->
     <tr ng-repeat="batch in batches | orderBy:'styleName'">
+        <td><a href="#!/viewBatch/{{batch.id}}" class="btn btn-default">{{batch.batchNumber}}</a></td>
         <td>{{ batch.styleName}}</td>
-        <td><a href="#!/viewBatch/{{batch.id}}" class="btn btn-default">{{batch.batchNo}}</a></td>
+        <td>{{ batch.customer}}</td>
     </tr>
 </table>

@@ -23,6 +23,7 @@ public class BatchService {
     @Produces(MediaType.APPLICATION_JSON)
     public Object getBatchList(){
         return batchDao.getBatchList();
+        //return "{status:'UP'}";
 
     }
 
@@ -31,6 +32,15 @@ public class BatchService {
     @Produces(MediaType.APPLICATION_JSON)
     public Object getBatch(@QueryParam("id") final Integer id){
         return batchDao.getBatch(id);
+
+    }
+    
+    
+     @GET
+    @Path("/checkBatchNo")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Object checkBatchNo(@QueryParam("id") final Integer id){
+        return batchDao.checkBatchNo(id);
 
     }
 

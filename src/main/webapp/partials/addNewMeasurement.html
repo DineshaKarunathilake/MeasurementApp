@@ -4,7 +4,7 @@
 
 <label class="control-label col-sm-2" for="customer">Batch No:</label>
 <div class="col-sm-10">
-    <input ng-change="checkBatchNo()" ng-model="newMeasurementEntry.batchNo" id="batchno" class="form-control"/>
+    <input ng-change="checkBatchNo(newMeasurementEntry.batchNo)" ng-model="newMeasurementEntry.batchNo" id="batchno" class="form-control"/>
 </div>
 <label class="control-label col-sm-2" for="customer">Customer</label>
 <div class="col-sm-10">
@@ -28,20 +28,20 @@
     <tr ng-repeat="size in sizes">
         <td>
             <!-- editable Garment no: (float with validation) -->
-            <span text="size.s" ng-model="size.s" e-form="tableform">
-                {{ size.s }}
+            <span text="size.name" ng-model="size.name" e-form="tableform">
+                {{ size.name }}
             </span>
         </td>
         <td>
             <span>
                 <!--/addNewMeasurement/beforePresetting-->
-            <a ng-disabled="!batchNo" href="#!/addBody/{{stage}}/{{size.id}}" class="btn btn-default"
+            <a ng-disabled="!batchNo" href="#!/addBody/{{batchId}}/{{stage}}/{{size.id}}" class="btn btn-default"
                title="Add Body"><span class="fa fa-plus"></span></a>
             </span>
         </td>
         <td>
             <span>
-            <a ng-disabled="!batchNo" href="#!/addSleeve/{{stage}}/{{size.id}}" class="btn btn-default"
+            <a ng-disabled="!batchNo" href="#!/addSleeve/{{batchId}}/{{stage}}/{{size.id}}" class="btn btn-default"
                title="Add Sleeve"><span class="fa fa-plus"></span></a>
             </span>
         </td>

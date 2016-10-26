@@ -15,11 +15,11 @@ angular.module('exampleApp', ['ngRoute', 'ngCookies', 'exampleApp.services','xed
                             templateUrl: 'partials/addNewMeasurement.html',
                             controller: NewMeasurementController
                         });
-            $routeProvider.when('/addBody/:stage/:size', {
+            $routeProvider.when('/addBody/:batchId/:stage/:size', {
                             templateUrl: 'partials/addBody.html',
                             controller: AddBodyController
                         });
-            $routeProvider.when('/addSleeve/:stage/:size', {
+            $routeProvider.when('/addSleeve/:batchId/:stage/:size', {
                             templateUrl: 'partials/addSleeve.html',
                             controller: AddSleeveController
                         });
@@ -99,28 +99,85 @@ angular.module('exampleApp', ['ngRoute', 'ngCookies', 'exampleApp.services','xed
 
 
 		$rootScope.initialized = true;
-	});
+	})
+	
+   .constant('appConfig', {
+     servicePath: 'http://localhost:8080/measurementapp/services/'
+    });
+	
 
-function NewMeasurementController($scope,$routeParams, $location) {
+function NewMeasurementController($scope,$routeParams, $location,$http,appConfig) {
+    
+    
+    $scope.init = function (){
+        $scope.getSizeList();
+        $scope.batchId;
+        
+    }
     $scope.disable=true;
     $scope.newMeasurementEntry={}
     $scope.newMeasurementEntry.customer="Please enter a Batch Number";
     $scope.newMeasurementEntry.style="Please enter a Batch Number";
 
-    $scope.checkBatchNo= function(){
+    $scope.checkBatchNo= function(key){
+        
     $scope.newMeasurementEntry.customer="Invalid Batch Number";
     $scope.newMeasurementEntry.style="Invalid Batch Number";
 
-         if($scope.newMeasurementEntry.batchNo=="12341"){
-             $scope.newMeasurementEntry.customer="YOUR Customer";
-             $scope.newMeasurementEntry.style="Your style";
-             $scope.batchNo=$scope.newMeasurementEntry.batchNo;
-         }
 
+            var params = {};
+            params.id=key;
+
+            $http({
+                method: 'GET',
+                url: appConfig.servicePath + 'BatchService/checkBatchNo',
+                params: params
+            }).then(
+                    function success(response) {
+                      console.log(response.data);
+                      
+                      if(response.data.count=="1"){
+                        $scope.newMeasurementEntry.customer=response.data.customer;
+                        $scope.newMeasurementEntry.style=response.data.styleName;
+                        $scope.batchId=response.data.id;
+                        $scope.batchNo=$scope.newMeasurementEntry.batchNo;
+                      }
+                      
+                    },
+                    function error(error) {
+
+                        console.log(error);
+                    }
+            );
+
+    }
+    
+    $scope.getSizeList = function (){
+        console.log("done");
+        var params = {};
+        
+        $http({
+            method: 'GET',
+            url: appConfig.servicePath + 'SizeService/getSizeList',
+            params: params
+        }).then(
+                function success(response) {
+                  //console.log(response.data);
+                   $scope.sizes = response.data;
+ 			
+                },
+                function error(error) {
+                    
+                    console.log(error);
+                }
+        );
+        
+        
+        
     }
      switch ($routeParams.stage){
         case 'beforePresetting':
-            $scope.stage=0;
+            $scope.stage=1;
             $scope.stageName='Before Presetting';
             break;
         case 'afterPresetting':
@@ -135,17 +192,21 @@ function NewMeasurementController($scope,$routeParams, $location) {
            $location.path('/selectStage');
 
      }
-	 $scope.sizes = [
-        {id: 1, s: 'XS'},
-        {id: 2, s: 'S'},
-        {id: 3, s: 'M'},
-        {id: 4, s: 'L'},
-        {id: 5, s: 'XL'}
-      ];
+//	 $scope.sizes = [
+//        {id: 1, s: 'XS'},
+//        {id: 2, s: 'S'},
+//        {id: 3, s: 'M'},
+//        {id: 4, s: 'L'},
+//        {id: 5, s: 'XL'}
+//      ];
 
         $scope.save = function() {
 		console.log("Saving : " + $scope.newMeasurementEntry)
 	};
+        
+        
+        $scope.init();
+        
 };
 
 
@@ -213,16 +274,57 @@ function CreateController($scope, $location, BlogPostService) {
 
 
 
-function AddBodyController($scope,$routeParams, $location){
+function AddBodyController($scope,$routeParams, $location,$http,appConfig){
 
 
-     $scope.entries = [
-        {id: 1, gmt: 'Garment1',chestWidth: 0, hemWidth:0,cbLength:0,cfLength:0},
+    $scope.init = function (){
+        $scope.entries = [
+        {id: 1, gmt: 'Garment1'},
         {id: 2, gmt: 'Garment2'},
         {id: 3, gmt: 'Garment3'},
         {id: 4, gmt: 'Garment4'},
         {id: 5, gmt: 'Garment5'}
-      ];
+        ];
+        $scope.getGarmentEntry();
+        console.log("done");
+    }
+    
+    $scope.getGarmentEntry = function (){
+        var params={};
+        params.bid=$routeParams.batchId;
+        params.sizeid=$routeParams.size;
+        params.stageid=$routeParams.stage;
+        
+                     $http({
+                        method: 'GET',
+                        url: appConfig.servicePath + 'GarmentEntryService/getGarmentEntry',
+                        params: params
+                    }).then(
+                            function success(response) {
+                                    console.log(response.data);
+                                    $scope.entries =response.data;
+                        
+                                       
+                                    for (var i=0;i<5;i++){
+                                        if(response.data.length<i+1){
+                                            $scope.entries[i]={}
+                                            
+                                        }
+                                        $scope.entries[i].gmt='Garment ' +(i+1);
+                      
+                                }
+                                   // console.log($scope.entries);
+                            },
+                            function error(error) {
+
+                                console.log(error);
+                            }
+                    );
+            
+        
+    }
+
+     
 
       switch ($routeParams.size){
              case '1':
@@ -252,10 +354,41 @@ function AddBodyController($scope,$routeParams, $location){
   // save edits
       $scope.saveTable = function() {
       console.log($scope.entries);
+       
+//        for (var x=0;x<$scope.entries.length;x++){
+//           // console.log($scope.cgLength);
+//            
+//                     var params={};
+//                     params.bid=$routeParams.batchId;
+//                     params.sid=$routeParams.size;
+//                     params.stageid=$routeParams.stage;
+//                     params.cblength=$scope.entries[x].cbLength;
+//                     params.cflength=$scope.entries[x].cfLength;
+//                     params.chestwidth=$scope.entries[x].chestWidth;
+//                     params.hemwidth=$scope.entries[x].hemWidth;
+//                     console.log(params);
+//
+//                    $http({
+//                        method: 'POST',
+//                        url: appConfig.servicePath + 'GarmentEntryService/createGarmentEntry',
+//                        params: params
+//                    }).then(
+//                            function success(response) {
+//
+//                            },
+//                            function error(error) {
+//
+//                                console.log(error);
+//                            }
+//                    );
+//            
+//        }
 
        };
+       
+       $scope.init();
 
-       }
+   }
 
 function AddSleeveController($scope,$routeParams, $location){
 
@@ -297,20 +430,46 @@ function AddSleeveController($scope,$routeParams, $location){
   // save edits
      $scope.saveTable = function() {
         console.log($scope.entries);
-
+        
         };
 
 }
-function BatchListCtrl($scope, $routeParams, $location){
-     $scope.batches = [
-        {id: 1, batchNo: '12341',styleName: 'ab111',stage: '1'},
-        {id: 2, batchNo: '12342',styleName: 'ab112',stage: '2'},
-        {id: 3, batchNo: '12343',styleName: 'ab113',stage: '2'},
-        {id: 4, batchNo: '12344',styleName: 'ab112',stage: '3'},
-        {id: 5, batchNo: '12345',styleName: 'ab112',stage: '1'}
-
-      ];
-      console.log($scope.batches);
+function BatchListCtrl($scope, $routeParams, $location, $http,appConfig){
+    
+    $scope.init = function (){
+        console.log("sgfdj");
+        $scope.getBatchList();
+    }
+    
+    $scope.getBatchList = function (){
+        var params={};
+        
+        $http({
+            method: 'GET',
+            url: appConfig.servicePath + 'BatchService/getBatchList',
+            params: params
+        }).then(
+                function success(response) {
+                  $scope.batches=response.data;
+ 			
+                },
+                function error(error) {
+                    
+                    console.log(error);
+                }
+        );
+    }
+//     $scope.batches = [
+//        {id: 1, batchNo: '12341',styleName: 'ab111',stage: '1'},
+//        {id: 2, batchNo: '12342',styleName: 'ab112',stage: '2'},
+//        {id: 3, batchNo: '12343',styleName: 'ab113',stage: '2'},
+//        {id: 4, batchNo: '12344',styleName: 'ab112',stage: '3'},
+//        {id: 5, batchNo: '12345',styleName: 'ab112',stage: '1'}
+//
+//      ];
+     // console.log($scope.batches);
+      
+      $scope.init();
       };
 
 var services = angular.module('exampleApp.services', ['ngResource']);
