@@ -123,14 +123,14 @@ public class BatchJpaControllerExt extends BatchJpaController {
         EntityManager em = getEntityManager();
         try {
 
-            String sqlString ="SELECT count(b.id) as count,b.id,s.customer ,s.name as styleName "
+            String sqlString ="SELECT b.id,s.customer ,s.name as styleName "
                     + "FROM batch b "
                     + "inner join style s on b.style_id = s.id "
                     + "where b.batch_number=?id";
             Query query = em.createNativeQuery(sqlString);
             query.setParameter("id", id);
             query.setHint(QueryHints.RESULT_TYPE, ResultType.Map);
-            return query.getSingleResult();
+            return query.getResultList();
         } finally {
             em.close();
         }

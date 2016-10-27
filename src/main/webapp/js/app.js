@@ -142,10 +142,10 @@ function NewMeasurementController($scope, $routeParams, $location, $http, appCon
                 function success(response) {
                     console.log(response.data);
 
-                    if (response.data.count == "1") {
-                        $scope.newMeasurementEntry.customer = response.data.customer;
-                        $scope.newMeasurementEntry.style = response.data.styleName;
-                        $scope.batchId = response.data.id;
+                    if (response.data.length > 0 ) {
+                        $scope.newMeasurementEntry.customer = response.data[0].customer;
+                        $scope.newMeasurementEntry.style = response.data[0].styleName;
+                        $scope.batchId = response.data[0].id;
                         $scope.batchNo = $scope.newMeasurementEntry.batchNo;
                     }
 
