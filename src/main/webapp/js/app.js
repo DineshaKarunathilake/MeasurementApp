@@ -281,7 +281,7 @@ function ViewBatchCtrl($scope, $routeParams, $location, $http, appConfig) {
         }).then(
                 function success(response) {
 
-                   // console.log("calling size:" + 1)
+                    // console.log("calling size:" + 1)
                     $scope.allMeasurements[1] = response.data;
 
                 },
@@ -301,7 +301,7 @@ function ViewBatchCtrl($scope, $routeParams, $location, $http, appConfig) {
         }).then(
                 function success(response) {
 
-                   // console.log("calling size:" + 2)
+                    // console.log("calling size:" + 2)
                     $scope.allMeasurements[2] = response.data;
 
                 },
@@ -365,7 +365,7 @@ function ViewBatchCtrl($scope, $routeParams, $location, $http, appConfig) {
         }).then(
                 function success(response) {
 
-                   // console.log("calling size:" + 5)
+                    // console.log("calling size:" + 5)
                     $scope.allMeasurements[5] = response.data;
 
                 },
@@ -387,7 +387,7 @@ function ViewBatchCtrl($scope, $routeParams, $location, $http, appConfig) {
         }).then(
                 function success(response) {
 
-                  //  console.log("calling size:" + 6)
+                    //  console.log("calling size:" + 6)
                     $scope.allMeasurements[6] = response.data;
 
                 },
@@ -400,7 +400,7 @@ function ViewBatchCtrl($scope, $routeParams, $location, $http, appConfig) {
 
 
 
-       // console.log($scope.allMeasurements);
+        // console.log($scope.allMeasurements);
 
 
 
@@ -420,7 +420,7 @@ function ViewBatchCtrl($scope, $routeParams, $location, $http, appConfig) {
             params: params1
         }).then(
                 function success(response) {
-                  //  console.log("sleeve");
+                    //  console.log("sleeve");
                     $scope.allSleeves[1] = response.data;
                     // console.log(response.data);
 
@@ -442,7 +442,7 @@ function ViewBatchCtrl($scope, $routeParams, $location, $http, appConfig) {
             params: params2
         }).then(
                 function success(response) {
-                   // console.log("sleeve");
+                    // console.log("sleeve");
                     $scope.allSleeves[2] = response.data;
                     // console.log(response.data);
 
@@ -462,7 +462,7 @@ function ViewBatchCtrl($scope, $routeParams, $location, $http, appConfig) {
             params: params3
         }).then(
                 function success(response) {
-                   // console.log("sleeve");
+                    // console.log("sleeve");
                     $scope.allSleeves[3] = response.data;
                     // console.log(response.data);
 
@@ -482,7 +482,7 @@ function ViewBatchCtrl($scope, $routeParams, $location, $http, appConfig) {
             params: params4
         }).then(
                 function success(response) {
-                   // console.log("sleeve");
+                    // console.log("sleeve");
                     $scope.allSleeves[4] = response.data;
                     // console.log(response.data);
 
@@ -502,7 +502,7 @@ function ViewBatchCtrl($scope, $routeParams, $location, $http, appConfig) {
             params: params5
         }).then(
                 function success(response) {
-                   // console.log("sleeve");
+                    // console.log("sleeve");
                     $scope.allSleeves[5] = response.data;
                     // console.log(response.data);
 
@@ -522,7 +522,7 @@ function ViewBatchCtrl($scope, $routeParams, $location, $http, appConfig) {
             params: params6
         }).then(
                 function success(response) {
-                   // console.log("sleeve");
+                    // console.log("sleeve");
                     $scope.allSleeves[6] = response.data;
                     // console.log(response.data);
                     $scope.meargeArrays();
@@ -534,27 +534,27 @@ function ViewBatchCtrl($scope, $routeParams, $location, $http, appConfig) {
                 }
         );
 
-            
-            //console.log($scope.allSleeves);
+
+        //console.log($scope.allSleeves);
     }
-    
-    
+
+
     $scope.meargeArrays = function () {
-      //  console.log($scope.allSleeves);
-       // console.log($scope.allMeasurements);
-        
-        for(var i=1;i<=6;i++){
-           // console.log($scope.allSleeves[i]);
-            for(var j=0;j<5;j++){
-                if (typeof $scope.allMeasurements[i][j]  === "undefined" ){
-                    $scope.allMeasurements[i][j]={}
+        //  console.log($scope.allSleeves);
+        // console.log($scope.allMeasurements);
+
+        for (var i = 1; i <= 6; i++) {
+            // console.log($scope.allSleeves[i]);
+            for (var j = 0; j < 5; j++) {
+                if (typeof $scope.allMeasurements[i][j] === "undefined") {
+                    $scope.allMeasurements[i][j] = {}
                 }
-                if (typeof $scope.allSleeves[i][j]  === "undefined" ){
+                if (typeof $scope.allSleeves[i][j] === "undefined") {
                     continue;
                 }
-                $scope.allMeasurements[i][j]['length']=$scope.allSleeves[i][j]['length'];
-                $scope.allMeasurements[i][j]['opening']=$scope.allSleeves[i][j]['opening'];
-                $scope.allMeasurements[i][j]['width']=$scope.allSleeves[i][j]['width'];
+                $scope.allMeasurements[i][j]['length'] = $scope.allSleeves[i][j]['length'];
+                $scope.allMeasurements[i][j]['opening'] = $scope.allSleeves[i][j]['opening'];
+                $scope.allMeasurements[i][j]['width'] = $scope.allSleeves[i][j]['width'];
             }
         }
         console.log($scope.allMeasurements);
@@ -706,7 +706,7 @@ function AddBodyController($scope, $routeParams, $location, $http, appConfig) {
                     params: params
                 }).then(
                         function success(response) {
-
+                            $scope.init();
                         },
                         function error(error) {
 
@@ -733,7 +733,7 @@ function AddBodyController($scope, $routeParams, $location, $http, appConfig) {
                     params: params
                 }).then(
                         function success(response) {
-
+                            $scope.init();
                         },
                         function error(error) {
 
@@ -742,7 +742,7 @@ function AddBodyController($scope, $routeParams, $location, $http, appConfig) {
                 );
             }
 
-            $scope.init();
+
         }
 
 
